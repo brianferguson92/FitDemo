@@ -7,12 +7,112 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/total_steps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:text="STEPS:"
+        android:textSize="26sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etSteps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/total_steps" />
+
+    <Button
+        android:id="@+id/btnSteps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="ADD STEPS"
+        app:layout_constraintTop_toBottomOf="@+id/etSteps" />
+
+    <TextView
+        android:id="@+id/tvStepsStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="START TIME:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvStepsEndTime"
+        app:layout_constraintTop_toBottomOf="@+id/btnSteps"/>
+
+    <TextView
+        android:id="@+id/tvStepsEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="END TIME:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvStepsStartTime"
+        app:layout_constraintTop_toBottomOf="@+id/btnSteps"/>
+
+    <TextView
+        android:id="@+id/tvWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WEIGHT:"
+        android:textSize="26sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvStepsStartTime"/>
+
+    <EditText
+        android:id="@+id/etWeight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvWeight" />
+
+    <Button
+        android:id="@+id/btnWeight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="ADD WEIGHT"
+        app:layout_constraintTop_toBottomOf="@+id/etWeight" />
+
+    <TextView
+        android:id="@+id/tvWeightStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="START TIME: "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvWeightEndTime"
+        app:layout_constraintTop_toBottomOf="@+id/btnWeight"/>
+
+    <TextView
+        android:id="@+id/tvWeightEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="END TIME:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvWeightStartTime"
+        app:layout_constraintTop_toBottomOf="@+id/btnWeight"/>
+
+    <Button
+        android:id="@+id/btnData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="GO TO DATA"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnRefresh_data"/>
+
+
+    <Button
+        android:id="@+id/btnRefresh_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:text="REFRESH DATA"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
