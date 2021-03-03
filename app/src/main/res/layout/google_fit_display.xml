@@ -14,6 +14,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="STEPS:" />
 
+    <TextView
+        android:id="@+id/tvCount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toTopOf="@+id/etInput"
+        app:layout_constraintStart_toEndOf="@id/tvTitle"/>
+
     <EditText
         android:id="@+id/etInput"
         android:layout_width="match_parent"

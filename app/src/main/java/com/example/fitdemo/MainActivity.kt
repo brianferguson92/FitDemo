@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity(), StepsUtil.GoogleFitStepsListener, Weig
         }
 
         btnData.setOnClickListener {
-            //val intent = Intent(this, GoogleFitAcitivty::class.java)
+            val intent = Intent(this, GoogleFitActivity::class.java)
             startActivity(intent)
         }
     }
