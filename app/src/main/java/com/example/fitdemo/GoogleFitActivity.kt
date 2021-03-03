@@ -2,6 +2,7 @@ package com.example.fitdemo
 
 import android.os.Bundle
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,7 @@ import com.example.fitdemo.util.GoogleFitUtil
 import com.example.fitdemo.util.StepsUtil
 import com.google.android.gms.fitness.FitnessOptions
 import com.google.android.gms.fitness.data.DataType
+import com.google.android.gms.fitness.data.Field
 
 class GoogleFitActivity : AppCompatActivity(), GoogleFitDisplayAdapter.GoogleFitDisplayListener {
     private lateinit var  recyclerView: RecyclerView
@@ -25,7 +27,8 @@ class GoogleFitActivity : AppCompatActivity(), GoogleFitDisplayAdapter.GoogleFit
 
         val dataTypeModels = mutableListOf<DataTypeModel>()
 
-        dataTypeModels.add(DataTypeModel("STEPS:", "ADD STEPS", DataType.TYPE_STEP_COUNT_DELTA))
+        dataTypeModels.add(DataTypeModel("STEPS:", "ADD STEPS", DataType.TYPE_STEP_COUNT_DELTA, Field.FIELD_STEPS))
+        dataTypeModels.add(DataTypeModel("WEIGHT:", "ADD", DataType.TYPE_WEIGHT, Field.FIELD_WEIGHT))
 
         val googleFitDisplayAdapter = GoogleFitDisplayAdapter(dataTypeModels, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -35,13 +38,12 @@ class GoogleFitActivity : AppCompatActivity(), GoogleFitDisplayAdapter.GoogleFit
     override fun onButtonClicked(dataType: DataType, value: EditText) {
     }
 
-    override fun readData(dataType: DataType): String {
+    override fun readData(dataType: DataType, field: Field, textView: TextView) {
         val fitnessOptions = FitnessOptions.builder()
                 .addDataType(dataType)
                 .build()
 
-        fitnessUtil.readData(this, fitnessOptions, dataType)
-        return "COUNT"
+        fitnessUtil.readData(this, fitnessOptions, dataType, field, textView)
     }
 
 }
