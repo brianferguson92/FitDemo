@@ -60,7 +60,6 @@ class StepsUtil {
     }
 
     fun insertSteps(context: Context, fitnessOptions: FitnessOptions, steps: Int, startTime: ZonedDateTime, endTime: ZonedDateTime ) {
-
         val dataSource = DataSource.Builder()
                 .setAppPackageName(context)
                 .setDataType(DataType.TYPE_STEP_COUNT_DELTA)

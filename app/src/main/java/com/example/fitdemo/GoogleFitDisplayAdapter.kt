@@ -13,7 +13,7 @@ import com.google.android.gms.fitness.data.DataType
 class GoogleFitDisplayAdapter(private val dataTypes: List<DataTypeModel>, private val listener: GoogleFitDisplayListener): RecyclerView.Adapter<GoogleFitDisplayAdapter.ViewHolder>() {
     interface GoogleFitDisplayListener {
         fun onButtonClicked(dataType: DataType, value: EditText)
-        fun readDate(dataType: DataType): String
+        fun readData(dataType: DataType): String
     }
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -32,6 +32,7 @@ class GoogleFitDisplayAdapter(private val dataTypes: List<DataTypeModel>, privat
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.title.text = dataTypes[position].title
         holder.button.text = dataTypes[position].btnText
+        holder.count.text = listener.readData(dataTypes[position].dataType)
         holder.button.setOnClickListener {
            listener.onButtonClicked(dataTypes[position].dataType, holder.editText)
         }

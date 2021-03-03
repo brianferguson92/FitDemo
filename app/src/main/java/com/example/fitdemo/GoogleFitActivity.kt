@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitdemo.model.DataTypeModel
+import com.example.fitdemo.util.GoogleFitUtil
 import com.example.fitdemo.util.StepsUtil
 import com.google.android.gms.fitness.FitnessOptions
 import com.google.android.gms.fitness.data.DataType
@@ -14,6 +15,7 @@ class GoogleFitActivity : AppCompatActivity(), GoogleFitDisplayAdapter.GoogleFit
     private lateinit var  recyclerView: RecyclerView
 
     private var stepsUtil = StepsUtil()
+    private var fitnessUtil = GoogleFitUtil()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +35,13 @@ class GoogleFitActivity : AppCompatActivity(), GoogleFitDisplayAdapter.GoogleFit
     override fun onButtonClicked(dataType: DataType, value: EditText) {
     }
 
-    override fun readDate(dataType: DataType): String {
+    override fun readData(dataType: DataType): String {
         val fitnessOptions = FitnessOptions.builder()
                 .addDataType(dataType)
                 .build()
 
-        stepsUtil.readCurrentDailySteps(this, fitnessOptions)
-        return ""
+        fitnessUtil.readData(this, fitnessOptions, dataType)
+        return "COUNT"
     }
 
 }
