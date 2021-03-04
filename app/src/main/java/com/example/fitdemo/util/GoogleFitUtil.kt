@@ -58,7 +58,7 @@ class GoogleFitUtil {
                    fitnessOptions: FitnessOptions,
                    dataType: DataType,
                    field: Field,
-                   value: Int,
+                   value: Float,
                    startTime: ZonedDateTime,
                    endTime: ZonedDateTime) {
 
@@ -84,23 +84,23 @@ class GoogleFitUtil {
                 }
     }
 
-    private fun setDataPoint(dataType: DataType, dataSource:DataSource, field: Field, value: Int, startTime: ZonedDateTime, endTime: ZonedDateTime) {
+    private fun setDataPoint(dataType: DataType, dataSource:DataSource, field: Field, value: Float, startTime: ZonedDateTime, endTime: ZonedDateTime) {
         when(dataType){
             DataType.TYPE_HYDRATION -> {
                   dataPoint = DataPoint.builder(dataSource)
                         .setTimeInterval(startTime.toEpochSecond(), endTime.toEpochSecond(), TimeUnit.SECONDS)
-                        .setField(field, value.toFloat())
+                        .setField(field, value)
                          .build()
             }
             DataType.TYPE_WEIGHT -> {
-                val lbsToKilo = value.toFloat() * 0.45359237
+                val lbsToKilo = value * 0.45359237
                 dataPoint = DataPoint.builder(dataSource)
                         .setTimeInterval(startTime.toEpochSecond(), endTime.toEpochSecond(), TimeUnit.SECONDS)
                         .setField(field, lbsToKilo.toFloat())
                         .build()
             }
             DataType.TYPE_HEIGHT -> {
-                val feetToMeters = value.toFloat() * 0.3048
+                val feetToMeters = value * 0.3048
                 dataPoint = DataPoint.builder(dataSource)
                         .setTimeInterval(startTime.toEpochSecond(), endTime.toEpochSecond(), TimeUnit.SECONDS)
                         .setField(field, feetToMeters.toFloat())
@@ -109,7 +109,7 @@ class GoogleFitUtil {
             else -> {
                 dataPoint = DataPoint.builder(dataSource)
                         .setTimeInterval(startTime.toEpochSecond(), endTime.toEpochSecond(), TimeUnit.SECONDS)
-                        .setField(field, value)
+                        .setField(field, value.toInt())
                         .build()
             }
         }
@@ -129,7 +129,8 @@ class GoogleFitUtil {
             }
             DataType.TYPE_HEIGHT -> {
                 val metersToFeet = value.asFloat() * 3.28084
-                textView.text = "${metersToFeet.toInt()}ft"
+                val format = String.format("%.2f", metersToFeet)
+                textView.text = "${format}ft"
             }
         }
     }

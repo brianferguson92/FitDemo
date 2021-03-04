@@ -60,7 +60,7 @@ class GoogleFitActivity : AppCompatActivity(), GoogleFitDisplayAdapter.GoogleFit
                 .addDataType(dataType)
                 .build()
 
-        fitnessUtil.insertData(this, fitnessOptions, dataType, field, value.text.toString().toInt(), startTime, endTime)
+        fitnessUtil.insertData(this, fitnessOptions, dataType, field, value.text.toString().toFloat(), startTime, endTime)
         fitnessUtil.readData(this, fitnessOptions, dataType, field, textView)
     }
 
