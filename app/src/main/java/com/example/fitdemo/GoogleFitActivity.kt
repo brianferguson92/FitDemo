@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fitdemo.model.GoogleFitModel
 import com.example.fitdemo.util.GoogleFitUtil
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.fitness.Fitness
 import com.google.android.gms.fitness.FitnessOptions
 import com.google.android.gms.fitness.data.DataType
 import com.google.android.gms.fitness.data.Field
@@ -55,6 +56,16 @@ class GoogleFitActivity : AppCompatActivity(), GoogleFitDisplayAdapter.GoogleFit
         val googleFitDisplayAdapter = GoogleFitDisplayAdapter(googleFitModels, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = googleFitDisplayAdapter
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Fitness.getConfigClient(this,  GoogleSignIn.getAccountForExtension(this, fitnessOptions))
+                .disableFit()
+                .addOnSuccessListener {
+                }
+                .addOnFailureListener { e ->
+                }
     }
 
     override fun onButtonClicked(dataType: DataType, field: Field, value: EditText, startTime: ZonedDateTime, endTime: ZonedDateTime, textView: TextView) {
