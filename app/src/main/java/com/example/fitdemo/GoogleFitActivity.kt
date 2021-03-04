@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.TimePicker
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -49,6 +50,7 @@ class GoogleFitActivity : AppCompatActivity(), GoogleFitDisplayAdapter.GoogleFit
         googleFitModels.add(GoogleFitModel("WEIGHT:",  DataType.TYPE_WEIGHT, Field.FIELD_WEIGHT))
         googleFitModels.add(GoogleFitModel("WATER:",  DataType.TYPE_HYDRATION, Field.FIELD_VOLUME))
         googleFitModels.add(GoogleFitModel("HEIGHT:", DataType.TYPE_HEIGHT, Field.FIELD_HEIGHT))
+        googleFitModels.add(GoogleFitModel("NUTRITION:", DataType.TYPE_NUTRITION, Field.FIELD_NUTRIENTS))
 
         val googleFitDisplayAdapter = GoogleFitDisplayAdapter(googleFitModels, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -62,6 +64,7 @@ class GoogleFitActivity : AppCompatActivity(), GoogleFitDisplayAdapter.GoogleFit
 
         fitnessUtil.insertData(this, fitnessOptions, dataType, field, value.text.toString().toFloat(), startTime, endTime)
         fitnessUtil.readData(this, fitnessOptions, dataType, field, textView)
+        Toast.makeText(this, "Data added!", Toast.LENGTH_LONG)
     }
 
     override fun readData(dataType: DataType, field: Field, textView: TextView) {

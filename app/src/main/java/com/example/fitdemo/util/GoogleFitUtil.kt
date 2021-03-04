@@ -3,6 +3,7 @@ package com.example.fitdemo.util
 import android.content.Context
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.fitness.Fitness
 import com.google.android.gms.fitness.FitnessOptions
@@ -106,10 +107,19 @@ class GoogleFitUtil {
                         .setField(field, feetToMeters.toFloat())
                         .build()
             }
-            else -> {
+            DataType.TYPE_STEP_COUNT_DELTA -> {
                 dataPoint = DataPoint.builder(dataSource)
                         .setTimeInterval(startTime.toEpochSecond(), endTime.toEpochSecond(), TimeUnit.SECONDS)
                         .setField(field, value.toInt())
+                        .build()
+            }
+            DataType.TYPE_NUTRITION -> {
+                val nutrients = mapOf(Field.NUTRIENT_TOTAL_FAT to 0.4f)
+                dataPoint = DataPoint.builder(dataSource)
+                        .setTimeInterval(startTime.toEpochSecond(), endTime.toEpochSecond(), TimeUnit.SECONDS)
+                        .setField(Field.FIELD_MEAL_TYPE, Field.MEAL_TYPE_UNKNOWN)
+                        .setField(Field.FIELD_FOOD_ITEM, "food")
+                        .setField(field, nutrients)
                         .build()
             }
         }
