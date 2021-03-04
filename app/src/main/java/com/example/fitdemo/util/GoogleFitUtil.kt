@@ -23,19 +23,34 @@ class GoogleFitUtil {
 
         val readRequest = DataReadRequest.Builder().read(dataType).setTimeRange(startTime.toEpochSecond(), endTime.toEpochSecond(), TimeUnit.SECONDS).build()
 
-        Fitness.getHistoryClient(context, GoogleSignIn.getAccountForExtension(context, fitnessOptions))
-                .readData(readRequest)
-                .addOnSuccessListener {
-                    for(data in it.dataSets)
-                        for(dataPoint in data.dataPoints) {
-                            if(dataPoint.dataType == dataType) {
-                                setText(dataType, textView, dataPoint.getValue(field))
+        if(dataType == DataType.TYPE_STEP_COUNT_DELTA) {
+            Fitness.getHistoryClient(context, GoogleSignIn.getAccountForExtension(context, fitnessOptions))
+                    .readDailyTotal(dataType)
+                    .addOnSuccessListener {
+                            for(dataPoint in it.dataPoints) {
+                                if(dataPoint.dataType == dataType) {
+                                    setText(dataType, textView, dataPoint.getValue(field))
+                                }
                             }
-                        }
-                }
-                .addOnFailureListener {
-                    Log.e("GOOGLE_FIT", it.localizedMessage ?: "")
-                }
+                    }
+                    .addOnFailureListener {
+                        Log.e("GOOGLE_FIT", it.localizedMessage ?: "")
+                    }
+        } else {
+            Fitness.getHistoryClient(context, GoogleSignIn.getAccountForExtension(context, fitnessOptions))
+                    .readData(readRequest)
+                    .addOnSuccessListener {
+                        for (data in it.dataSets)
+                            for (dataPoint in data.dataPoints) {
+                                if (dataPoint.dataType == dataType) {
+                                    setText(dataType, textView, dataPoint.getValue(field))
+                                }
+                            }
+                    }
+                    .addOnFailureListener {
+                        Log.e("GOOGLE_FIT", it.localizedMessage ?: "")
+                    }
+        }
     }
 
     fun insertData(context: Context,

@@ -10,9 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fitdemo.model.GoogleFitModel
 import com.google.android.gms.fitness.data.DataType
 import com.google.android.gms.fitness.data.Field
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZonedDateTime
+import java.time.*
 import java.time.format.DateTimeFormatter
 
 class GoogleFitDisplayAdapter(private val googleFits: List<GoogleFitModel>, private val listener: GoogleFitDisplayListener): RecyclerView.Adapter<GoogleFitDisplayAdapter.ViewHolder>() {
@@ -36,18 +34,26 @@ class GoogleFitDisplayAdapter(private val googleFits: List<GoogleFitModel>, priv
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        var eTime = LocalDateTime.now().atZone(ZoneId.systemDefault())
-        var sTime = eTime.minusHours(1)
         val pattern = "hh:mm:ss a"
+        val dateTimeFormatter  = DateTimeFormatter.ofPattern(pattern)
+        val dateTimeEnd = LocalDateTime.now().atZone(ZoneId.systemDefault())
+        val dateTimeStart = dateTimeEnd.minusHours(1)
 
         holder.title.text = googleFits[position].title
         holder.button.text = "ADD"
-        holder.startTime.text = sTime.format(DateTimeFormatter.ofPattern(pattern))
-        holder.endTime.text = eTime.format(DateTimeFormatter.ofPattern(pattern))
+        holder.startTime.text = dateTimeStart.format(DateTimeFormatter.ofPattern(pattern))
+        holder.endTime.text = dateTimeEnd.format(DateTimeFormatter.ofPattern(pattern))
+
         listener.readData(googleFits[position].dataType, googleFits[position].field, holder.count)
 
+        val localTime1 = LocalTime.parse(holder.startTime.text.toString(), dateTimeFormatter)
+        val localTime2 = LocalTime.parse(holder.endTime.text.toString(), dateTimeFormatter)
+
+        val startTime = LocalDateTime.of(LocalDate.now(), localTime1).atZone(ZoneId.systemDefault())
+        val endTime = LocalDateTime.of(LocalDate.now(), localTime2).atZone(ZoneId.systemDefault())
+
         holder.button.setOnClickListener {
-           listener.onButtonClicked(googleFits[position].dataType, googleFits[position].field, holder.editText, sTime, eTime, holder.count)
+           listener.onButtonClicked(googleFits[position].dataType, googleFits[position].field, holder.editText, startTime, endTime, holder.count)
         }
 
         holder.startTime.setOnClickListener {
