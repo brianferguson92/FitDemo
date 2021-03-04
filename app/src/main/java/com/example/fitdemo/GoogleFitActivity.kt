@@ -30,9 +30,6 @@ class GoogleFitActivity : AppCompatActivity(), GoogleFitDisplayAdapter.GoogleFit
     private var fitnessUtil = GoogleFitUtil()
     private lateinit var fitnessOptions: FitnessOptions
 
-    var endTime = LocalDateTime.now().atZone(ZoneId.systemDefault())
-    var startTime = endTime.minusHours(1)
-
     val ANDROID_PERMISSIONS_REQUEST_CODE = 1
     val GOOGLE_FIT_PERMISSIONS_REQUEST_CODE = 2
 
@@ -51,6 +48,7 @@ class GoogleFitActivity : AppCompatActivity(), GoogleFitDisplayAdapter.GoogleFit
         googleFitModels.add(GoogleFitModel("STEPS:",  DataType.TYPE_STEP_COUNT_DELTA, Field.FIELD_STEPS))
         googleFitModels.add(GoogleFitModel("WEIGHT:",  DataType.TYPE_WEIGHT, Field.FIELD_WEIGHT))
         googleFitModels.add(GoogleFitModel("WATER:",  DataType.TYPE_HYDRATION, Field.FIELD_VOLUME))
+        googleFitModels.add(GoogleFitModel("HEIGHT:", DataType.TYPE_HEIGHT, Field.FIELD_HEIGHT))
 
         val googleFitDisplayAdapter = GoogleFitDisplayAdapter(googleFitModels, this)
         recyclerView.layoutManager = LinearLayoutManager(this)

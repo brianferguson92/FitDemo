@@ -17,6 +17,7 @@ import kotlin.math.ceil
 
 class GoogleFitUtil {
     private lateinit var dataPoint: DataPoint
+
     fun readData(context: Context, fitnessOptions: FitnessOptions, dataType: DataType, field: Field, textView: TextView) {
         val endTime = LocalDateTime.now().atZone(ZoneId.systemDefault())
         val startTime = endTime.minusDays(1)
@@ -68,7 +69,6 @@ class GoogleFitUtil {
                 .build()
 
         setDataPoint(dataType, dataSource, field, value, startTime, endTime)
-
         val dataSet = DataSet.builder(dataSource).add(dataPoint).build()
         val request = DataUpdateRequest.Builder()
                 .setDataSet(dataSet)
@@ -99,6 +99,13 @@ class GoogleFitUtil {
                         .setField(field, lbsToKilo.toFloat())
                         .build()
             }
+            DataType.TYPE_HEIGHT -> {
+                val feetToMeters = value.toFloat() * 0.3048
+                dataPoint = DataPoint.builder(dataSource)
+                        .setTimeInterval(startTime.toEpochSecond(), endTime.toEpochSecond(), TimeUnit.SECONDS)
+                        .setField(field, feetToMeters.toFloat())
+                        .build()
+            }
             else -> {
                 dataPoint = DataPoint.builder(dataSource)
                         .setTimeInterval(startTime.toEpochSecond(), endTime.toEpochSecond(), TimeUnit.SECONDS)
@@ -119,6 +126,10 @@ class GoogleFitUtil {
             }
             DataType.TYPE_STEP_COUNT_DELTA -> {
                 textView.text = "$value"
+            }
+            DataType.TYPE_HEIGHT -> {
+                val metersToFeet = value.asFloat() * 3.28084
+                textView.text = "${metersToFeet.toInt()}ft"
             }
         }
     }
